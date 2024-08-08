@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding-inline: 30%;
+}
+
+#users-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
+  background-color: #cccccc;
+  border-radius: 15px;
+  padding: 1rem;
+  align-items: center;
+}
+
+.user > span {
+  font-size: 1.5rem;
+}

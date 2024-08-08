@@ -6,6 +6,11 @@ const client = createClient({
 });
 
 async function run() {
+  const usersContainer = document.getElementById("users-container");
+  const checkIn = document.getElementById("check-in");
+  const nameInput = document.getElementById("name-input");
+  const alarmModal = document.getElementById("alarm-reminder-modal");
+
   const { room, leave } = client.enterRoom("Century", {
     initialStorage: {
       users: new LiveList([]),
@@ -15,10 +20,6 @@ async function run() {
   const { root } = await room.getStorage();
   const users = root.get("users");
 
-  const userList = document.getElementById("present-users");
-  const checkIn = document.getElementById("check-in");
-  const checkOut = document.getElementById("check-out");
-  const nameInput = document.getElementById("name-input");
   let name = "";
 
   checkIn.addEventListener("click", () => {
@@ -27,16 +28,26 @@ async function run() {
   });
 
   room.subscribe(users, () => {
-    renderUsers()
+    renderUsers();
   });
 
   function renderUsers() {
-    userList.innerHTML = "";
+    usersContainer.innerHTML = "";
 
-    users.forEach((u) => {
-      const userItem = document.createElement("li");
-      userItem.innerHTML = u;
-      userList.appendChild(userItem);
+    users.forEach((u, i) => {
+      const userContainer = document.createElement("div");
+      userContainer.classList.add("user")
+
+      userContainer.innerHTML += u;
+      const checkoutButton = createCheckoutButton();
+      checkoutButton.addEventListener("click", () => {
+        if (users.length === 1) {
+          alarmModal.showModal();
+        }
+        users.delete(i);
+      })
+      userContainer.appendChild(checkoutButton);
+      usersContainer.appendChild(userContainer);
     });
   }
 
@@ -44,3 +55,9 @@ async function run() {
 }
 
 run();
+
+function createCheckoutButton() {
+  const elem = document.createElement("span");
+  elem.innerText = "X";
+  return elem
+}
