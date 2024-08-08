@@ -10,6 +10,12 @@ async function run() {
   const checkIn = document.getElementById("check-in");
   const nameInput = document.getElementById("name-input");
   const alarmModal = document.getElementById("alarm-reminder-modal");
+  const alarmModalConfirm = document.getElementById("confirm");
+  const alarmModalCancel = document.getElementById("cancel");
+
+  alarmModalConfirm.addEventListener("click", () => {
+    alarmModal.close();
+  })
 
   const { room, leave } = client.enterRoom("Century", {
     initialStorage: {
@@ -45,7 +51,7 @@ async function run() {
           alarmModal.showModal();
         }
         users.delete(i);
-      })
+      });
       userContainer.appendChild(checkoutButton);
       usersContainer.appendChild(userContainer);
     });
@@ -59,5 +65,5 @@ run();
 function createCheckoutButton() {
   const elem = document.createElement("span");
   elem.innerText = "X";
-  return elem
+  return elem;
 }

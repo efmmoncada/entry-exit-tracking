@@ -7125,6 +7125,11 @@ ${Array.from(traces).join("\n\n")}`
     const checkIn = document.getElementById("check-in");
     const nameInput = document.getElementById("name-input");
     const alarmModal = document.getElementById("alarm-reminder-modal");
+    const alarmModalConfirm = document.getElementById("confirm");
+    const alarmModalCancel = document.getElementById("cancel");
+    alarmModalConfirm.addEventListener("click", () => {
+      alarmModal.close();
+    });
     const { room, leave } = client.enterRoom("Century", {
       initialStorage: {
         users: new LiveList([])
